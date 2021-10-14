@@ -29,8 +29,8 @@ import org.apache.xmlrpc.XmlRpcException;
 
 import com.odoojava.api.OdooXmlRpcProxy.RPCProtocol;
 import com.odoojava.api.OdooXmlRpcProxy.RPCServices;
-import com.googlecode.jsonrpc4j.*;
-import com.googlecode.jsonrpc4j.JsonRpcClientException;
+//import com.googlecode.jsonrpc4j.*;
+//import com.googlecode.jsonrpc4j.JsonRpcClientException;
 
 /**
  * *
@@ -70,7 +70,7 @@ public class Session {
 	private Version serverVersion;
 
 	private URL jsonurl;
-	private JsonRpcHttpClient jsonclient;
+	//private JsonRpcHttpClient jsonclient;
 	// private Object[] login_args;
 
 	public URL getJsonurl(String entryPoint) {
@@ -128,8 +128,8 @@ public class Session {
 
 	private void setJsonClient() throws MalformedURLException {
 		// TODO Auto-generated method stub
-		JsonRpcHttpClient client = new JsonRpcHttpClient(getJsonurl(""));
-		jsonclient = client;
+		//JsonRpcHttpClient client = new JsonRpcHttpClient(getJsonurl(""));
+		//jsonclient = client;
 
 	}
 
@@ -222,10 +222,10 @@ public class Session {
 
 		// JSONRPC part
 		try {
-			id = authenticate_json_rpc();
+			//id = authenticate_json_rpc();
 			System.out.println("json rpc login");
 
-		} catch (JsonRpcClientException e) {
+		} catch (Exception e) {
 			System.out.println("Json rpc issue possibly caused by https://github.com/OCA/server-tools/issues/1237");
 			e.printStackTrace();
 		} catch (Throwable e) {
@@ -242,48 +242,48 @@ public class Session {
 		return userID;
 	}
 
-	private int authenticate_json_rpc() throws Throwable {
-		// TODO: fast and uggly implementation of json rpc, has to be refactored in the
-		// future
+//	private int authenticate_json_rpc() throws Throwable {
+//		// TODO: fast and uggly implementation of json rpc, has to be refactored in the
+//		// future
+//
+//		Map<String, String> articleMapOne = new HashMap<>();
+//		articleMapOne.put("password", password);
+//		articleMapOne.put("login", userName);
+//		articleMapOne.put("db", databaseName);
+//
+//		// Object[] result = call_json_rpc(, "common", "login", articleMapOne);
+//
+//		//jsonclient.setServiceUrl(getJsonurl("web/session/authenticate"));
+//
+//		//Map<String, Object> result =  jsonclient.invoke("call", articleMapOne, HashMap.class);
+//		//return (int) result.get("uid");
+//	}
 
-		Map<String, String> articleMapOne = new HashMap<>();
-		articleMapOne.put("password", password);
-		articleMapOne.put("login", userName);
-		articleMapOne.put("db", databaseName);
-
-		// Object[] result = call_json_rpc(, "common", "login", articleMapOne);
-
-		jsonclient.setServiceUrl(getJsonurl("web/session/authenticate"));
-
-		Map<String, Object> result =  jsonclient.invoke("call", articleMapOne, HashMap.class);
-		return (int) result.get("uid");
-	}
-
-	public Object[] call_report_jsonrpc(String reportModel, String reportMethod, ArrayList<Object> args)
-			throws Throwable {
-		// TODO: fast and uggly implementation of json rpc, has to be reafctored in the
-		// future
-
-		jsonclient.setServiceUrl(getJsonurl("jsonrpc"));
-		Map<String, Object> jsonparams = new HashMap<>();
-		jsonparams.put("service", "object");
-		jsonparams.put("method", "execute_kw");
-
-		ArrayList<Object> methodparams = new ArrayList<>();
-		methodparams.add(databaseName);
-		methodparams.add(userID);
-		methodparams.add(password);
-		methodparams.add(reportModel);
-		methodparams.add(reportMethod);
-		methodparams.add(args);
-
-		jsonparams.put("args", methodparams);
-
-		Object[] result = jsonclient.invoke("call", jsonparams, Object[].class);
-
-		return result;
-
-	}
+//	public Object[] call_report_jsonrpc(String reportModel, String reportMethod, ArrayList<Object> args)
+//			throws Throwable {
+//		// TODO: fast and uggly implementation of json rpc, has to be reafctored in the
+//		// future
+//
+//		//jsonclient.setServiceUrl(getJsonurl("jsonrpc"));
+//		Map<String, Object> jsonparams = new HashMap<>();
+//		jsonparams.put("service", "object");
+//		jsonparams.put("method", "execute_kw");
+//
+//		ArrayList<Object> methodparams = new ArrayList<>();
+//		methodparams.add(databaseName);
+//		methodparams.add(userID);
+//		methodparams.add(password);
+//		methodparams.add(reportModel);
+//		methodparams.add(reportMethod);
+//		methodparams.add(args);
+//
+//		jsonparams.put("args", methodparams);
+//
+//		//Object[] result = jsonclient.invoke("call", jsonparams, Object[].class);
+//
+//		//return result;
+//
+//	}
 
 	void checkDatabasePresenceSafe() {
 		// 21/07/2012 - Database listing may not be enabled (--no-database-list
@@ -518,13 +518,13 @@ public class Session {
 		return context;
 	}
 
-	public JsonRpcHttpClient getJsonclient() {
-		return jsonclient;
-	}
+//	public JsonRpcHttpClient getJsonclient() {
+//		return jsonclient;
+//	}
 
 	public Object[] getLogin_args() {
 		Object[] args = new Object[] { databaseName, userID, password };
-
+ System.out.println("Hello");
 		return args;
 	}
 }
